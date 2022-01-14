@@ -21,6 +21,7 @@ Todo List (ADD AS WE GO)
     b. Ranking componentThere are merge conflicts. Resolve them before committing.
  
         - Rankings (after _#_ questions/minutes ???)
+        - JV - Possibly want to code in a way to detect how many questions there are. This way we can alter how often the rankings are re-made and we don't run out of questions. 
  
         - Matchups based on rankings for next _#_ questions
  
