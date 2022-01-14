@@ -47,6 +47,7 @@ Todo List (ADD AS WE GO)
         - Teammates answer questions too (for fewer points than main person)
  
         - Tug of war bar display
+        - JV - Think it would be cool for the bar to be surging artificially a little bit (say the score is 20% of the bar to 80%, it moves a few percent left and right so it makes the battle look more intense. Can also have some illustrations on the outside of the board
 
 
 
