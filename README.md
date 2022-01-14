@@ -9,13 +9,7 @@ Todo List (ADD AS WE GO)
         - 1 correct, 3 wrong answers
  
             - pulled from other questions/designated ???
-<<<<<<< HEAD
-            - JV - (Think it would be good to have option for each. Vocab-related games would be easy to set up with answers pulled from other questions (and would be less intensive than having to write in wrong answers for each question, but other types of questions would likely have answers that are obviously unrelated to other questions.)
-=======
-            - JV - (Think it would be good to have option for each. Vocab-related games would be easy to set up with answers pulled from other questions (and would be less intensive than having to write in wrong answers for each question, but other types of questions would likely have answers that are obviously unrelated to other questions.) nah fuck you
-            hello
- 
->>>>>>> 58143fe4c875ebcb2de1c9a03d74984fb01d1372
+            - JV - (Think it would be good to have option for each. Vocab-related games would be easy to set up with answers pulled from other questions (and would be less intensive than having to write in wrong answers for each question, but other types of questions would likely have answers that are obviously unrelated to other questions.) ass
 
         - Distinct hovering display (color, size, etc)
  
@@ -24,7 +18,7 @@ Todo List (ADD AS WE GO)
         - Questions synchronous or asynchronous ???
         - JV - I think asynchronous would add more action to the game and further reward quickness
  
-    b. Ranking component
+    b. Ranking componentThere are merge conflicts. Resolve them before committing.
  
         - Rankings (after _#_ questions/minutes ???)
  
