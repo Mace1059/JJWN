@@ -95,6 +95,8 @@ Todo List (ADD AS WE GO)
     - JV - Here is the repository mentioned in article:
            https://github.com/rotemtam/kahootClone
            
+    - JV - Will also suggested Socket.io for server type stuff
+           
            
     a. Connecting all players via join code
 
@@ -109,3 +111,5 @@ FOR LATER:
 4. Create accounts/login
 
 5. Study set template
+
+JV - Two API things that seem helpful: Bootstrap and phaser.io
