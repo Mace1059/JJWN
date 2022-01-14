@@ -16,6 +16,7 @@ Todo List (ADD AS WE GO)
         - Points awarded for quickness
  
         - Questions synchronous or asynchronous ???
+        - JV - I think asynchronous would add more action to the game and further reward quickness
  
     b. Ranking component
  
