@@ -44,7 +44,7 @@ Todo List (ADD AS WE GO)
  
         - Final battle between top 2/3 teams at the end for _#_ questions/minutes
  
-        - Teammates answer questions too
+        - Teammates answer questions too (for fewer points than main person)
  
         - Tug of war bar display
 
