@@ -24,16 +24,19 @@ Todo List (ADD AS WE GO)
         - JV - Possibly want to code in a way to detect how many questions there are. This way we can alter how often the rankings are re-made and we don't run out of questions. 
  
         - Matchups based on rankings for next _#_ questions
+        - JV - Same as above
  
-        - Winner at end has most points
+        - Winner at end of each battle has most points
  
-        - Winner becomes "team captain," points now added up
+        - Winner becomes "team captain," points now added up, "loser" becomes a player for the winning team (does some things for fewer points)
  
         - Visualization on host screen
  
     c. Even vs Odd Players
  
         - Need to draw this out !!!
+        - JV - Even players is self-explanatory
+        - JV - For odd players: there is a new first step - everyone answers questions alone for a round (not against anyone). At end of round, the lowest scorer becomes attached to the highest scorer (as if they lost to the winner in a 1v1 round). This makes it so there are an even number of players at the first round and gives an innitial advantage to the highest individual scorer.
  
     d. Determining winner
  
