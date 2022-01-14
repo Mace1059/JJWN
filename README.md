@@ -9,7 +9,7 @@ Todo List (ADD AS WE GO)
         - 1 correct, 3 wrong answers
  
             - pulled from other questions/designated ???
-            - JV - (Think it would be good to have option for each. Vocab-related games would be easy to set up with answers pulled from other questions (and would be less intensive than having to write in wrong answers for each question, but other types of questions would likely have answers that are obviously unrelated to other questions.)
+            - JV - (Think it would be good to have option for each. Vocab-related games would be easy to set up with answers pulled from other questions (and would be less intensive than having to write in wrong answers for each question, but other types of questions would likely have answers that are obviously unrelated to other questions.) fuck you bitch
  
         - Distinct hovering display (color, size, etc)
  
