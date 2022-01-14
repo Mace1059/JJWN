@@ -91,6 +91,11 @@ Todo List (ADD AS WE GO)
 3. Create join portal/connecting all (JV ADD HERE)
     - JV - Innitial article that looks like it could help. Haven't gone and checked to make sure it is 100% feasable but regardless will be good starting point:
            https://rotemtam.medium.com/build-a-kahoot-clone-with-angularjs-and-firebase-b8b30891d968
+           
+    - JV - Here is the repository mentioned in article:
+           https://github.com/rotemtam/kahootClone
+           
+           
     a. Connecting all players via join code
 
     b. Creating central server
