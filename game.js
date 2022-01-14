@@ -10,4 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const button of buttons) {
       button.addEventListener('click', createParagraph);
     }
+  
+function myFunction() {
+  alert("let's get sturdy");
+}
 });
