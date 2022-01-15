@@ -14,4 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function myFunction() {
   alert("let's get sturdy");
 }
+
+function willFunction() {
+  alert("we live");
+}
 });
