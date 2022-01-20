@@ -11,6 +11,7 @@ var PlayerCount = 0
 var Questions = 0;
 var TimeRemaining = 0;
 var currentId = 0;
+var currentPlayer = "";
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -18,13 +19,9 @@ function chooseName(){
     para.textContent = 'Your name is ' + name;
     document.body.appendChild(para);
     
-    const newPlayer = new player();
-    newPlayer.pName = name;
-    newPlayer.id = currentId;
+    newPlayer = new Player(name, currentId);
     currentId++;
     playerList.push(newPlayer);
-
-    document.body.appendChild(newPlayer.pName);
 }
 
 // function createParagraph() {
@@ -46,11 +43,16 @@ function checkAnswer(chosen, correct) {
   return (chosen == correct)
 }
 
-player = new Object();
+function Player(name, id)
 {
-  player.pName = "ross";
-  player.id;
-  player.score = 0;
-  player.rank = 1;
-  player.questionsCorrect = 0;
+  this.pName = name;
+  this.id = id;
+  this.score = 0;
+  this.rank = 1;
+  this.questionsCorrect = 0;
 };
+
+function getName(player)
+{
+  currentPlayer = player.pName;
+}
