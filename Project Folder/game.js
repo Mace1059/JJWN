@@ -6,7 +6,7 @@
 // }
 
 
-let playerList = ['player1', 'player2', 'player3']
+let playerList = []
 var PlayerCount = 0
 var Questions = 0;
 var TimeRemaining = 0;
@@ -16,6 +16,12 @@ function chooseName(){
     const para = document.createElement('p');
     para.textContent = 'Your name is ' + name;
     document.body.appendChild(para);
+    
+    const newPlayer = new player();
+    newPlayer.pName = name;
+    playerList.push(newPlayer);
+
+    document.body.appendChild(newPlayer.pName);
 }
 
 test
@@ -40,4 +46,10 @@ function checkAnswer(chosen, correct) {
   return (chosen == correct)
 }
 
-test
+const player = new Object();
+{
+  player.pName;
+  player.score = 0;
+  player.rank = 1;
+  player.questionsCorrect = 0;
+}
