@@ -35,5 +35,7 @@ function myFunction() {
 
 // Returns true if chosen answer is the correct one, false otherwise
 function checkAnswer(chosen, correct) {
+  //More efficient way of doing this would be to make the parameters "Question" and "chosen" and then
+  //have a global map of questions and their answers so we could compare in this method.
   return (chosen == correct)
 }
