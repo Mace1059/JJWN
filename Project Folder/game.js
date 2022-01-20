@@ -11,12 +11,14 @@ var PlayerCount = 0
 var Questions = 0;
 var TimeRemaining = 0;
 
+
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
     const para = document.createElement('p');
     para.textContent = 'Your name is ' + name;
     document.body.appendChild(para);
 }
+
 
 
 
