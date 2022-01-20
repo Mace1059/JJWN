@@ -10,6 +10,7 @@ let playerList = []
 var PlayerCount = 0
 var Questions = 0;
 var TimeRemaining = 0;
+var currentId = 0;
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -19,13 +20,12 @@ function chooseName(){
     
     const newPlayer = new player();
     newPlayer.pName = name;
+    newPlayer.id = currentId;
+    currentId++;
     playerList.push(newPlayer);
 
     document.body.appendChild(newPlayer.pName);
 }
-
-test
-
 
 // function createParagraph() {
 //     const para = document.createElement('p');
@@ -46,10 +46,11 @@ function checkAnswer(chosen, correct) {
   return (chosen == correct)
 }
 
-const player = new Object();
+player = new Object();
 {
-  player.pName;
+  player.pName = "ross";
+  player.id;
   player.score = 0;
   player.rank = 1;
   player.questionsCorrect = 0;
-}
+};
