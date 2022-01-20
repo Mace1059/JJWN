@@ -43,6 +43,21 @@ function checkAnswer(chosen, correct) {
   return (chosen == correct)
 }
 
+
+test
+
+// random will nonsense
+function willFunction() {
+  var order = document.getElementById("menuSelection").value;
+  let hiddenMenu = ['beeschurger', 'big chungo', 'toes', 'sturdy'];
+  if (hiddenMenu.includes(order)) {
+    alert('dw bout it dawg we shlanging out some mf ' + order);
+  } else {
+    alert('mf that is not on the hidden menu');
+  }
+  
+
+
 function Player(name, id)
 {
   this.pName = name;
@@ -55,4 +70,5 @@ function Player(name, id)
 function getName(player)
 {
   currentPlayer = player.pName;
+
 }
