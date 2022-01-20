@@ -63,7 +63,7 @@ function willFunction() {
   } else {
     alert('mf that is not on the hidden menu');
   }
-  
+}
 
 
 function Player(name, id)
