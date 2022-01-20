@@ -23,11 +23,19 @@
             <p><button onclick="chooseName()">Enter</button></p>
         </div>
         <div>
+            <p id=nameDisplay>Name: </p>
+            <p id=scoreDisplay>Score: 0</p>
+        </div>
+
+        <div>
             <h2 id = "message"></h2>
+            <p>
             <button onclick="answerSubmit(1)" id = answer1>ANSWER 1</button>
             <button onclick="answerSubmit(2)" id = answer2>ANSWER 2</button>
             <button onclick="answerSubmit(3)" id = answer3>ANSWER 3</button>
             <button onclick="answerSubmit(4)" id = answer4>ANSWER 4</button>
+            </p>
+            <button onclick="nextQuestion()" id = nextQuestion>Next Question</button>
         </div>
     </div>
     
