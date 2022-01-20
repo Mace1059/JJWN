@@ -39,3 +39,5 @@ function checkAnswer(chosen, correct) {
   //have a global map of questions and their answers so we could compare in this method.
   return (chosen == correct)
 }
+
+test
