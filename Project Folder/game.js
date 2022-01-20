@@ -31,7 +31,5 @@ function chooseName(){
   
 function myFunction() {
   alert("let's get sturdy");
-}
+} 
 
-
-});
