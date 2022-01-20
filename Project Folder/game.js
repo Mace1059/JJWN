@@ -1,18 +1,11 @@
-// document.addEventListener('DOMContentLoaded', () => {
-// const buttons = document.querySelectorAll('button');
-
-// for (const button of buttons) {
-//   button.addEventListener('click', chooseName);
-// }
-
-
 let playerList = []
 var PlayerCount = 0
 var Questions = 0;
 var TimeRemaining = 0;
 var currentId = 0;
 var currentPlayer = "";
-var correct = false;
+var score = 0;
+var correct = true;
 
 
 function chooseName(){
@@ -21,26 +14,17 @@ function chooseName(){
       return
     }
     else {
-      const para = document.createElement('p');
-      para.textContent = 'Your name is ' + name;
-      document.body.appendChild(para);
+      // Figure out how to append instead of replacing element
+      document.getElementById('nameDisplay').innerHTML = "Name: " + name;
     }
-    const para = document.createElement('p');
-    para.textContent = name;
-    document.body.appendChild(para);
+    // const para = document.createElement('p');
+    // para.textContent = name;
+    // document.body.appendChild(para);
     
     newPlayer = new Player(name, currentId);
     currentId++;
     playerList.push(newPlayer);
 }
-
-// function createParagraph() {
-//     const para = document.createElement('p');
-//     para.textContent = 'You clicked the button!';
-//     document.body.appendChild(para);
-// }
-
-
   
 function myFunction() {
   alert("let's get sturdy");
@@ -91,8 +75,22 @@ function answerSubmit(int){
 function answerRevealed(){
   if (correct == true){
     document.getElementById('message').innerHTML = "Correct! Nice cock!";
+    score += 100
   }
   else {
     document.getElementById('message').innerHTML = "Incorrect! You suck!";
   }
+  document.getElementById('message').style.visibility = "visible";
+  document.getElementById('nextQuestion').style.visibility = "visible"; 
+  document.getElementById('scoreDisplay').innerHTML = "Score: " + score;
+ 
 }
+
+function nextQuestion() {
+  document.getElementById('answer1').style.visibility = "visible";
+  document.getElementById('answer2').style.visibility = "visible";
+  document.getElementById('answer3').style.visibility = "visible";
+  document.getElementById('answer4').style.visibility = "visible";
+  document.getElementById('message').style.visibility = "hidden";
+}
+
