@@ -15,6 +15,14 @@ var currentPlayer = "";
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
+    if (name == ''){
+      return
+    }
+    else {
+      const para = document.createElement('p');
+      para.textContent = 'Your name is ' + name;
+      document.body.appendChild(para);
+    }
     const para = document.createElement('p');
     para.textContent = 'Your name is ' + name;
     document.body.appendChild(para);
