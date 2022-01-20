@@ -12,6 +12,8 @@ var Questions = 0;
 var TimeRemaining = 0;
 var currentId = 0;
 var currentPlayer = "";
+var correct = false;
+
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -24,7 +26,7 @@ function chooseName(){
       document.body.appendChild(para);
     }
     const para = document.createElement('p');
-    para.textContent = 'Your name is ' + name;
+    para.textContent = name;
     document.body.appendChild(para);
     
     newPlayer = new Player(name, currentId);
@@ -52,8 +54,6 @@ function checkAnswer(chosen, correct) {
 }
 
 
-test
-
 // random will nonsense
 function willFunction() {
   var order = document.getElementById("menuSelection").value;
@@ -64,7 +64,6 @@ function willFunction() {
     alert('mf that is not on the hidden menu');
   }
 }
-// DELETEME
 
 function Player(name, id)
 {
@@ -79,4 +78,21 @@ function getName(player)
 {
   currentPlayer = player.pName;
 
+}
+
+function answerSubmit(int){
+  document.getElementById('answer1').style.visibility = "hidden";
+  document.getElementById('answer2').style.visibility = "hidden";
+  document.getElementById('answer3').style.visibility = "hidden";
+  document.getElementById('answer4').style.visibility = "hidden";
+  answerRevealed()
+}
+
+function answerRevealed(){
+  if (correct == true){
+    document.getElementById('message').innerHTML = "Correct! Nice cock!";
+  }
+  else {
+    document.getElementById('message').innerHTML = "Incorrect! You suck!";
+  }
 }
