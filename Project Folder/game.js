@@ -3,6 +3,9 @@ var score = 0;
 var correct = true;
 var answer = null;
 const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
+var playerAmount = 10
+var time = 20;
+
 
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -30,14 +33,16 @@ function chooseName(){
     else {
       // Figure out how to append instead of replacing element
       document.getElementById('nameDisplay').innerHTML = "Name: " + name;
+      updateTimer()
     }
     // const para = document.createElement('p');
     // para.textContent = name;
     // document.body.appendChild(para);
-    
+    playerAmount += 1
     newPlayer = new Player(name, currentId);
     currentId++;
     playerList.push(newPlayer);
+
 }
   
 // Returns true if chosen answer is the correct one, false otherwise
@@ -87,6 +92,8 @@ function answerSubmit(int){
 }
 
 function answerRevealed(){
+
+  document.getElementById('message').style.display = 'block';
   if (correct == true){
     document.getElementById('message').innerHTML = "Correct! Nice cock!";
     score += 100
@@ -107,7 +114,7 @@ function nextQuestion() {
   document.getElementById('answer2').style.visibility = "visible";
   document.getElementById('answer3').style.visibility = "visible";
   document.getElementById('answer4').style.visibility = "visible";
-  document.getElementById('message').style.visibility = "hidden";
+  document.getElementById('message').style.display = "none";
 
   var shuffledAnswerList = shuffle(answerList)  
 
@@ -119,3 +126,27 @@ function nextQuestion() {
   
 }
 
+function updateTimer(){
+  time = 20;
+  timer = setInterval(function(){
+      time -= 1;
+      document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
+    
+      if(time == 0){
+        
+      }
+  }, 1000);
+}
+
+
+function sortList(){
+
+}
+
+
+function scoreboard() {
+  for (let i = 0; i < playerAmount; i++) {
+    document.getElementById('scoreboard').innerHTML += '/n' + i+"th";
+    console.log('yuh')
+  }
+}
