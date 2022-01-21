@@ -1,12 +1,26 @@
-let playerList = []
-var PlayerCount = 0
-var Questions = 0;
-var TimeRemaining = 0;
-var currentId = 0;
 var currentPlayer = "";
 var score = 0;
 var correct = true;
+var answer = null;
+const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -26,10 +40,6 @@ function chooseName(){
     playerList.push(newPlayer);
 }
   
-function myFunction() {
-  alert("let's get sturdy");
-} 
-
 // Returns true if chosen answer is the correct one, false otherwise
 function checkAnswer(chosen, correct) {
   //More efficient way of doing this would be to make the parameters "Question" and "chosen" and then
@@ -64,12 +74,16 @@ function getName(player)
 
 }
 
+
+
 function answerSubmit(int){
+  answer = int;
   document.getElementById('answer1').style.visibility = "hidden";
   document.getElementById('answer2').style.visibility = "hidden";
   document.getElementById('answer3').style.visibility = "hidden";
   document.getElementById('answer4').style.visibility = "hidden";
   answerRevealed()
+
 }
 
 function answerRevealed(){
@@ -87,10 +101,21 @@ function answerRevealed(){
 }
 
 function nextQuestion() {
+  var answerList = [question.a1, question.a2, question.a3, question.a4];
+
   document.getElementById('answer1').style.visibility = "visible";
   document.getElementById('answer2').style.visibility = "visible";
   document.getElementById('answer3').style.visibility = "visible";
   document.getElementById('answer4').style.visibility = "visible";
   document.getElementById('message').style.visibility = "hidden";
+
+  var shuffledAnswerList = shuffle(answerList)  
+
+  document.getElementById('questionDisplay').innerHTML = question.q;
+  document.getElementById('answer1').innerHTML = shuffledAnswerList[0];
+  document.getElementById('answer2').innerHTML = shuffledAnswerList[1];
+  document.getElementById('answer3').innerHTML = shuffledAnswerList[2];
+  document.getElementById('answer4').innerHTML = shuffledAnswerList[3];
+  
 }
 
