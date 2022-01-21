@@ -79,8 +79,6 @@ function getName(player)
 
 }
 
-
-
 function answerSubmit(int){
   answer = int;
   document.getElementById('answer1').style.visibility = "hidden";
@@ -140,7 +138,7 @@ function updateTimer(){
 
 
 function sortList(){
-
+  // this function needs fixing
 }
 
 
