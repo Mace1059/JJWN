@@ -129,8 +129,6 @@ function speedScore(){
 
 function answerSubmit(int){
 
-  document.getElementById(answer)
-
   //Checks to see if answer index matches correct index
   correct = checkAnswer(int - 1, index);
   document.getElementById('answer1').style.visibility = "hidden";
