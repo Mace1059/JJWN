@@ -1,9 +1,12 @@
 var currentPlayer = "";
-var score = 0;
 var correct = true;
+const score = 100;
+var totalScore = score;
+var playerScore = 0;
 const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
 var playerAmount = 10
 var time = 20;
+var answered = false;
 var index;
 
 
@@ -109,16 +112,19 @@ function getName(player)
 }
 
 
-function speedScore(){
+function questionScore(){
+    totalScore = score;
     speedScore = 100;
-    speedScore = setInterval(function(){
-        time -= 1;
-      
-        if(time == 0){
-          return 0
-        }
+    var questionScore = setInterval(function(){
+        speedScore = speedScore - 1;
+        if(speedScore <= 0 | answered){
+          totalScore = totalScore + speedScore;
+          answerRevealed()
+          clearInterval(questionScore)        
+          }
+
     }, 100);
-    return speedScore
+
 }
 
 
@@ -135,24 +141,26 @@ function answerSubmit(int){
   document.getElementById('answer2').style.visibility = "hidden";
   document.getElementById('answer3').style.visibility = "hidden";
   document.getElementById('answer4').style.visibility = "hidden";
-  answerRevealed()
 
+  answered = true;
 }
 
 function answerRevealed(){
 
+
   document.getElementById('message').style.display = 'block';
   if (correct == true){
+    playerScore += totalScore;
     document.getElementById('message').innerHTML = "Correct! Nice cock!";
-    score += 100
-  }
-  else {
+  } else {
     document.getElementById('message').innerHTML = "Incorrect! You suck!";
   }
+
+  // totalScore = score
   document.getElementById('message').style.visibility = "visible";
   document.getElementById('nextQuestion').style.visibility = "visible"; 
-  document.getElementById('scoreDisplay').innerHTML = "Score: " + score;
- 
+  document.getElementById('scoreDisplay').innerHTML = "Score: " + playerScore;
+
 }
 
 function nextQuestion() {
@@ -172,8 +180,9 @@ function nextQuestion() {
   document.getElementById('answer3').innerHTML = shuffledAnswerList[2];
   document.getElementById('answer4').innerHTML = shuffledAnswerList[3];
   
-  speedScore()
+  answered = false;
 
+  questionScore()
 }
 
 
