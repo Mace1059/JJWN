@@ -1,7 +1,6 @@
 var currentPlayer = "";
 var score = 0;
 var correct = true;
-var answer = null;
 const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
 var playerAmount = 10
 var time = 20;
@@ -25,6 +24,34 @@ function shuffle(array) {
   //Iterate through list to find which one matches answer
   // Keep track of the "correct" index in the array with index variable
   // See button section for more comments
+  for (let i = 0; i < array.length; i++) {
+    if (question.correct == 1)
+    {
+      if (array[i] == question.a1)
+      {
+        index = i;
+      }
+    } else if (question.correct == 2)
+    {
+      if (array[i] == question.a2)
+      {
+        index = i;
+      }
+    } else if (question.correct == 3)
+    {
+      if (array[i] == question.a3)
+      {
+        index = i;
+      }
+    } else if (question.correct == 4)
+    {
+      if (array[i] == question.a4)
+      {
+        index = i;
+      }
+    }
+  }
+
   return array;
 }
 
@@ -49,8 +76,8 @@ function chooseName(){
 }
   
 // Returns true if chosen answer is the correct one, false otherwise
-function checkAnswer(chosen, correct) {
-  return (chosen == correct)
+function checkAnswer(int, index) {
+  return (int == index); // correct is boolean, need index of right answer
 }
 
 
@@ -81,10 +108,8 @@ function getName(player)
 }
 
 function answerSubmit(int){
-  answer = int;
   //Checks to see if answer index matches correct index
-  checkAnswer(int, index)
-
+  correct = checkAnswer(int - 1, index);
   document.getElementById('answer1').style.visibility = "hidden";
   document.getElementById('answer2').style.visibility = "hidden";
   document.getElementById('answer3').style.visibility = "hidden";
