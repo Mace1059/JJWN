@@ -20,10 +20,11 @@ function shuffle(array) {
     // And swap it with the current element.
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
-  }
 
+  }
   return array;
 }
+
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -79,8 +80,28 @@ function getName(player)
 
 }
 
+
+function speedScore(){
+    speedScore = 100;
+    speedScore = setInterval(function(){
+        time -= 1;
+      
+        if(time == 0){
+          return 0
+        }
+    }, 100);
+    return speedScore
+}
+
+
+
+
+
+
+
 function answerSubmit(int){
-  answer = int;
+
+  document.getElementById(answer)
   document.getElementById('answer1').style.visibility = "hidden";
   document.getElementById('answer2').style.visibility = "hidden";
   document.getElementById('answer3').style.visibility = "hidden";
@@ -122,7 +143,11 @@ function nextQuestion() {
   document.getElementById('answer3').innerHTML = shuffledAnswerList[2];
   document.getElementById('answer4').innerHTML = shuffledAnswerList[3];
   
+  speedScore()
+
 }
+
+
 
 function updateTimer(){
   time = 20;
@@ -131,7 +156,7 @@ function updateTimer(){
       document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
     
       if(time == 0){
-        
+        return
       }
   }, 1000);
 }
