@@ -20,6 +20,7 @@ function shuffle(array) {
     // And swap it with the current element.
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
+
   }
   //Iterate through list to find which one matches answer
   // Keep track of the "correct" index in the array with index variable
@@ -51,9 +52,10 @@ function shuffle(array) {
       }
     }
   }
-
+  }
   return array;
 }
+
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -107,7 +109,29 @@ function getName(player)
 
 }
 
+
+function speedScore(){
+    speedScore = 100;
+    speedScore = setInterval(function(){
+        time -= 1;
+      
+        if(time == 0){
+          return 0
+        }
+    }, 100);
+    return speedScore
+}
+
+
+
+
+
+
+
 function answerSubmit(int){
+
+  document.getElementById(answer)
+
   //Checks to see if answer index matches correct index
   correct = checkAnswer(int - 1, index);
   document.getElementById('answer1').style.visibility = "hidden";
@@ -151,7 +175,11 @@ function nextQuestion() {
   document.getElementById('answer3').innerHTML = shuffledAnswerList[2];
   document.getElementById('answer4').innerHTML = shuffledAnswerList[3];
   
+  speedScore()
+
 }
+
+
 
 function updateTimer(){
   time = 20;
@@ -160,7 +188,7 @@ function updateTimer(){
       document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
     
       if(time == 0){
-        
+        return
       }
   }, 1000);
 }
