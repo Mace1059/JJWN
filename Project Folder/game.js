@@ -8,7 +8,9 @@ var playerAmount = 10
 var time = 20;
 var answered = false;
 var index;
+questionsAnswered = 0;
 
+window.onload = function() {nextQuestion()};
 
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -141,7 +143,7 @@ function answerSubmit(int){
   document.getElementById('answer2').style.visibility = "hidden";
   document.getElementById('answer3').style.visibility = "hidden";
   document.getElementById('answer4').style.visibility = "hidden";
-
+  questionsAnswered += 1
   answered = true;
 }
 
@@ -156,7 +158,7 @@ function answerRevealed(){
     document.getElementById('message').innerHTML = "Incorrect! You suck!";
   }
 
-  // totalScore = score
+  
   document.getElementById('message').style.visibility = "visible";
   document.getElementById('nextQuestion').style.visibility = "visible"; 
   document.getElementById('scoreDisplay').innerHTML = "Score: " + playerScore;
