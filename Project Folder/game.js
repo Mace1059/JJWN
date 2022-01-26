@@ -1,14 +1,16 @@
 var currentPlayer = "";
 var correct = true;
-const score = 100;
-var totalScore = score;
+const constantSpeedScore = 200;
+const score = 300;
+var totalScore = 0;
 var playerScore = 0;
 const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
 var playerAmount = 10
 var time = 20;
 var answered = false;
 var index;
-questionsAnswered = 0;
+var questionsCorrect = 0;
+var questionsAnswered = 0;
 
 window.onload = function() {nextQuestion()};
 
@@ -71,13 +73,15 @@ function chooseName(){
       document.getElementById('nameDisplay').innerHTML = "Name: " + name;
       updateTimer()
     }
+    document.getElementById('gameDisplay').style.display = "block";
+    
     // const para = document.createElement('p');
     // para.textContent = name;
     // document.body.appendChild(para);
-    playerAmount += 1
-    newPlayer = new Player(name, currentId);
-    currentId++;
-    playerList.push(newPlayer);
+    // playerAmount += 1
+    // newPlayer = new Player(name, currentId);
+    // currentId++;
+    // playerList.push(newPlayer);
 
 }
   
@@ -116,15 +120,16 @@ function getName(player)
 
 function questionScore(){
     totalScore = score;
-    speedScore = 100;
+    speedScore = constantSpeedScore;
     var questionScore = setInterval(function(){
+      if(speedScore > 0){
         speedScore = speedScore - 1;
-        if(speedScore <= 0 | answered){
-          totalScore = totalScore + speedScore;
-          answerRevealed()
-          clearInterval(questionScore)        
-          }
-
+        }
+      if (answered) {
+        totalScore = totalScore + speedScore;
+        answerRevealed()
+        clearInterval(questionScore)        
+        }
     }, 100);
 
 }
@@ -136,45 +141,46 @@ function questionScore(){
 
 
 function answerSubmit(int){
-
   //Checks to see if answer index matches correct index
   correct = checkAnswer(int - 1, index);
-  document.getElementById('answer1').style.visibility = "hidden";
-  document.getElementById('answer2').style.visibility = "hidden";
-  document.getElementById('answer3').style.visibility = "hidden";
-  document.getElementById('answer4').style.visibility = "hidden";
   questionsAnswered += 1
   answered = true;
 }
 
+
 function answerRevealed(){
 
+  document.getElementById('questionButtons').style.display = "none";
 
   document.getElementById('message').style.display = 'block';
-  if (correct == true){
-    playerScore += totalScore;
-    document.getElementById('message').innerHTML = "Correct! Nice cock!";
-  } else {
-    document.getElementById('message').innerHTML = "Incorrect! You suck!";
-  }
+  document.getElementById('questionDisplay').style.display = "none";
 
   
-  document.getElementById('message').style.visibility = "visible";
-  document.getElementById('nextQuestion').style.visibility = "visible"; 
+  if (correct == true){
+    questionsCorrect += 1
+    playerScore += totalScore;
+    document.getElementById('message').innerHTML = "Correct! Nice cock! +" + totalScore;
+  } else
+    document.getElementById('message').innerHTML = "Incorrect! You suck! +0";
+  
+
+  document.getElementById('nextQuestion').style.display = "block"; 
   document.getElementById('scoreDisplay').innerHTML = "Score: " + playerScore;
+  document.getElementById('questionCorrectTotalDisplay').innerHTML = questionsCorrect + "/" + questionsAnswered + ": " + Math.round(questionsCorrect/questionsAnswered * 100) + "%";
 
 }
 
 function nextQuestion() {
   var answerList = [question.a1, question.a2, question.a3, question.a4];
-
-  document.getElementById('answer1').style.visibility = "visible";
-  document.getElementById('answer2').style.visibility = "visible";
-  document.getElementById('answer3').style.visibility = "visible";
-  document.getElementById('answer4').style.visibility = "visible";
-  document.getElementById('message').style.display = "none";
-
   var shuffledAnswerList = shuffle(answerList)  
+
+  document.getElementById('nextQuestion').style.display = "none";
+
+
+  document.getElementById('questionButtons').style.display = "block";
+  document.getElementById('message').style.display = "none";
+  document.getElementById('questionDisplay').style.display = "block";
+
 
   document.getElementById('questionDisplay').innerHTML = question.q;
   document.getElementById('answer1').innerHTML = shuffledAnswerList[0];
@@ -191,12 +197,13 @@ function nextQuestion() {
 
 function updateTimer(){
   time = 20;
-  timer = setInterval(function(){
+  updateTimer = setInterval(function(){
       time -= 1;
       document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
     
       if(time == 0){
-        return
+        clearInterval(updateTimer)        
+
       }
   }, 1000);
 }
