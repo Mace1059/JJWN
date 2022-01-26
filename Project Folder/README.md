@@ -113,4 +113,6 @@ FOR LATER:
 
 5. Study set template
 
+6. Customizeable win message written by winner prior to game
+
 JV - Two API things that seem helpful: Bootstrap and phaser.io
