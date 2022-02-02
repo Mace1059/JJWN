@@ -10,43 +10,39 @@
 </head>
 <body>
     <style>
-        .my-background {
-            background-color: floralwhite;
-            height: 100vw
-        }
     </style>
+
     <div>
-        <div>
-            <input id="nameEntryBox" placeholder="Nickname">
-            <p><button onclick="chooseName()">Enter</button></p>
-        </div>
-        <div>
-            <p id=nameDisplay>Name: </p>
-            <p id=scoreDisplay>Score: 0</p>
-            <p id=timerDisplay>Time Remaining: 20</p>
-            <p id=questionCorrectTotalDisplay>0/0</p>
-            
-        </div>
-
-        <div id=gameDisplay style="display:none;">
-            <h2 id = "message"></h2>
-            <h4 id = "questionDisplay">Yuh</h4>
-            <div id=questionButtons style="">
-                <p>
-                <button onclick="answerSubmit(1)" id = answer1>ANSWER 1</button>
-                <button onclick="answerSubmit(2)" id = answer2>ANSWER 2</button>
-                <button onclick="answerSubmit(3)" id = answer3>ANSWER 3</button>
-                <button onclick="answerSubmit(4)" id = answer4>ANSWER 4</button>
-                </p>
-            </div>
-            <button onclick="nextQuestion()" id = nextQuestion>Next Question</button>
-        </div>
-        <div>
-            <h5 id=scoreboard>Scoreboard</h5>
-        </div>
+        <input id="nameEntryBox" placeholder="Nickname">
+        <p><button onclick="chooseName()">Enter</button></p>
     </div>
-    
 
+    <div id=informationDisplay>
+        <h6 id=nameDisplay>Name: </h6>
+        <h6 id=scoreDisplay>Score: 0</h6>
+        <h6 id=timerDisplay>Time Remaining: 20</h6>
+        <h6 id=questionCorrectTotalDisplay>0/0</h6>
+    </div>
+
+    <div id=matchmakingDisplay style="display:none;">
+        <h3 id=matchmakingMessage>Matchmaking in Progress...</h3>
+        <h5 id=gameCountdownDisplay></h5>
+        <h5 id=scoreboard>Scoreboard</h5>
+    </div>
+
+    <div id=gameDisplay style="display:none;">
+        <h2 id = "message"></h2>
+        <h4 id = "questionDisplay">Yuh</h4>
+        <div id=questionButtons style="">
+            <p>
+            <button onclick="answerSubmit(1)" id = answer1>ANSWER 1</button>
+            <button onclick="answerSubmit(2)" id = answer2>ANSWER 2</button>
+            <button onclick="answerSubmit(3)" id = answer3>ANSWER 3</button>
+            <button onclick="answerSubmit(4)" id = answer4>ANSWER 4</button>
+            </p>
+        </div>
+        <button onclick="nextQuestion()" id = nextQuestion>Next Question</button>
+    </div>
 
 </body>
 
