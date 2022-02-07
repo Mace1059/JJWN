@@ -1,18 +1,23 @@
 var currentPlayer = "";
+var pname = null;
 var correct = true;
 const constantSpeedScore = 200;
-const score = 300;
+const SCORE = 300;
+var timer;
+var questionScore;
 var totalScore = 0;
 var playerScore = 0;
 const question = {q:'What is 4+3', a1:6, a2:2, a3:5, a4:7, correct: 4};
 var playerAmount = 10
 var time = 20;
-var answered = false;
 var index;
 var questionsCorrect = 0;
 var questionsAnswered = 0;
 
-window.onload = function() {nextQuestion()};
+// 0=waiting, 1=questions, 2=matchmaking 3=final battle 4=finished
+var gameState = 0
+
+// window.onload = function() {matchmaking()};
 
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -64,16 +69,15 @@ function shuffle(array) {
 
 
 function chooseName(){
-    var name = document.getElementById("nameEntryBox").value;
-    if (name == ''){
+    pname = document.getElementById("nameEntryBox").value;
+    if (pname == ''){
       return
     }
     else {
       // Figure out how to append instead of replacing element
-      document.getElementById('nameDisplay').innerHTML = "Name: " + name;
-      updateTimer()
+      document.getElementById('nameDisplay').innerHTML = "Name: " + pname;
+      matchmaking();
     }
-    document.getElementById('gameDisplay').style.display = "block";
     
     // const para = document.createElement('p');
     // para.textContent = name;
@@ -102,56 +106,71 @@ function willFunction() {
   }
 }
 
-function Player(name, id)
-{
-  this.pName = name;
-  this.id = id;
-  this.score = 0;
-  this.rank = 1;
-  this.questionsCorrect = 0;
-};
+// function Player(name, id)
+// {
+//   this.pName = name;
+//   this.id = id;
+//   this.score = 0;
+//   this.rank = 1;
+//   this.questionsCorrect = 0;
+// };
 
-function getName(player)
-{
-  currentPlayer = player.pName;
+// function getName(player)
+// {
+//   currentPlayer = player.pName;
 
-}
+// }
 
 
-function questionScore(){
-    totalScore = score;
+function speedScoreTimer(){
+    totalScore = SCORE;
     speedScore = constantSpeedScore;
-    var questionScore = setInterval(function(){
-      if(speedScore > 0){
-        speedScore = speedScore - 1;
-        }
-      if (answered) {
-        totalScore = totalScore + speedScore;
-        answerRevealed()
-        clearInterval(questionScore)        
-        }
+    questionScore = setInterval(function(){
+      totalScore = SCORE + speedScore
+      speedScore = speedScore - 1;
+      if(speedScore < 0){
+        clearInterval(questionScore)   
+      }      
     }, 100);
-
 }
 
 
+function updateTimer(){
+  time = 10;
+  timer = setInterval(function(){
+      time -= 1;
+      document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
+    
+      if(time == 0){
+        clearInterval(questionScore)        
+        clearInterval(timer)
+        matchmaking();
+
+      }
+  }, 1000);
+}
 
 
+function matchmaking(){
+  document.getElementById('gameDisplay').style.display = "none";
+  document.getElementById('matchmakingDisplay').style.display = "block"; 
+  document.getElementById('matchmakingMessage').innerHTML = pname + " vs " + "your mother";
+  setTimeout(function() { gameInitial(); }, 5000)
+  setTimeout(function() { updateTimer(); }, 5000)
+}
 
+function gameInitial(){
+  document.getElementById('gameDisplay').style.display = "block";
+  nextQuestion()
+}
 
 
 function answerSubmit(int){
   //Checks to see if answer index matches correct index
   correct = checkAnswer(int - 1, index);
-  questionsAnswered += 1
-  answered = true;
-}
-
-
-function answerRevealed(){
+  // answered = true;
 
   document.getElementById('questionButtons').style.display = "none";
-
   document.getElementById('message').style.display = 'block';
   document.getElementById('questionDisplay').style.display = "none";
 
@@ -163,11 +182,10 @@ function answerRevealed(){
   } else
     document.getElementById('message').innerHTML = "Incorrect! You suck! +0";
   
-
+  questionsAnswered += 1
   document.getElementById('nextQuestion').style.display = "block"; 
   document.getElementById('scoreDisplay').innerHTML = "Score: " + playerScore;
   document.getElementById('questionCorrectTotalDisplay').innerHTML = questionsCorrect + "/" + questionsAnswered + ": " + Math.round(questionsCorrect/questionsAnswered * 100) + "%";
-
 }
 
 function nextQuestion() {
@@ -188,25 +206,9 @@ function nextQuestion() {
   document.getElementById('answer3').innerHTML = shuffledAnswerList[2];
   document.getElementById('answer4').innerHTML = shuffledAnswerList[3];
   
-  answered = false;
-
-  questionScore()
+  speedScoreTimer()
 }
 
-
-
-function updateTimer(){
-  time = 20;
-  updateTimer = setInterval(function(){
-      time -= 1;
-      document.getElementById('timerDisplay').textContent = "Time Remaining: " + time;
-    
-      if(time == 0){
-        clearInterval(updateTimer)        
-
-      }
-  }, 1000);
-}
 
 
 function sortList(){
