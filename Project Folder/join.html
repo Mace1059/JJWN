@@ -8,8 +8,21 @@
     <link rel="stylesheet" href="styles.css">
     <script src='join.js'></script>
     <script src="/socket.io/socket.io.js"></script>
-
 </head>
 <body>
+    <div>
+        <input id="nameEntryBox" placeholder="What is your name?">
+        <p><button onclick="chooseName()">Enter</button></p>
+    </div>
+
+    <div>
+        <input id="IDEntryBox" placeholder="Enter Game ID Here">
+        <p><button onclick="chooseID()">Enter</button></p>
+    </div>
+
+    <div id=informationDisplay>
+        <h6 id=nameDisplay>Name: </h6>
+        <h6 id=IDDisplay>Game ID: </h6>
+    </div>
 </body>
 </html>
