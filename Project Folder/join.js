@@ -3,6 +3,18 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*"} });
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/join.html');
+});
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
+
+io.on('connection', (socket) => {
+  console.log
+});
+
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
     if (name == ''){
@@ -24,16 +36,3 @@ function chooseID(){
       document.getElementById('IDDisplay').innerHTML = "Game ID: " + id;
     }
 }
-
-app.get('/join', (req, res) => {
-    res.render('join')
-})
-
-
-server.listen(3001, () => {
-    console.log('test');
-})
-
-io.on('connection', (socket) => {
-    console.log
-});
