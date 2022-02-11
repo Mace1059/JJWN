@@ -2,13 +2,25 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*"} });
+var min = Math.ceil(1);
+var max = Math.floor(65535);
+var gamePin = Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 
-app.get('/', (req, res) => {
+app.use(express.static(__dirname));
+ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/join.html');
 });
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+var pin = pad(gamePin, 5)
+
+function pad(num, size) {
+  num = num.toString();
+  while (num.length < size) num = "0" + num;
+  return num;
+}
+
+server.listen(pin, () => {
+  console.log('listening on *:' + pin);
 });
 
 io.on('connection', (socket) => {
