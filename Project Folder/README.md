@@ -116,3 +116,8 @@ FOR LATER:
 6. Customizeable win message written by winner prior to game
 
 JV - Two API things that seem helpful: Bootstrap and phaser.io
+
+SERVER:
+For scalability (multiple game sessions) you'll probably want to look into MySQL to organize games. Have your SQL database keep track of PHP session IDs, their chosen nicknames, and the game room they're connected with. 
+
+At the end of the day, it's going to take a lot of knowledge in a lot of different languages, but one of the biggest struggles is going to be getting all the separate layers to connect to each other. For instance, Your HTML needs to be interspersed with PHP and your PHP needs to be interfacing with MySQL, and your pages need to have JavaScript that interfaces with a Node in Node.js hosted on your server, and that Node needs to be updating your SQL database, and your desktop display app needs to be connecting to your node, and all the devices need to be getting updated when changes occur. Nightmare of connectivity.
