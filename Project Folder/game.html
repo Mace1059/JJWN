@@ -25,7 +25,7 @@
     </div>
 
 
-    <div    >
+    <div>
         <!-- name/score/timer plate -->
         <header>     
             <div id=scoreDisplay>0</div>
@@ -40,31 +40,32 @@
         </div>
 
         <div id="timerBar" style="width:0;"></div>
+        
+        <div class="gameBox">
+            <div id=gameDisplay style="display:none;">
+                <h4 id = "questionDisplay">QUESTION</h4>
+                <div id=questionButtons class='questionGrid' style="">
+                    <button onclick="answerSubmit(1)" class='answerButton a1' id = answer1>ANSWER 1</button>
+                    <button onclick="answerSubmit(2)" class='answerButton a2' id = answer2>ANSWER 2</button>
+                    <button onclick="answerSubmit(3)" class='answerButton a3' id = answer3>ANSWER 3</button>
+                    <button onclick="answerSubmit(4)" class='answerButton a4' id = answer4>ANSWER 4</button>
+                </div>
+            </div>
 
-        <!-- questions -->
-        <div id=gameDisplay class='text-center' style="display:none;">
-            <h4 id = "questionDisplay">QUESTION</h4>
-            <div id=questionButtons class='questionGrid' style="">
-            <p>
-                <button onclick="answerSubmit(1)" class='answerButton a1' id = answer1>ANSWER 1</button>
-                <button onclick="answerSubmit(2)" class='answerButton a2' id = answer2>ANSWER 2</button>
-                <button onclick="answerSubmit(3)" class='answerButton a3' id = answer3>ANSWER 3</button>
-                <button onclick="answerSubmit(4)" class='answerButton a4' id = answer4>ANSWER 4</button>
-            </p>
+            <div id=revealDisplay style="display:none">
+                <h2 id = "message"></h2>
+                <button onclick="showQuestion()" class='nextQuestionButton'>Next Question</button>
             </div>
         </div>
 
-        <div id=revealDisplay class='text-center' style="display:none">
-            <h2 id = "message"></h2>
-            <button onclick="showQuestion()" class='nextQuestionButton'>Next Question</button>
-        </div>
+        <canvas id="finalBar" width="200" height="200" style="display:none"></canvas>
+
+
+    
     </div>
 
     <div class="footer">
-        test2
         <div id=timerDisplay class="timerDisplay">20</div>
-        test2
-
 
     </div>
 </body>

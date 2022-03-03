@@ -1,5 +1,5 @@
 body {
-    background-color: darkslateblue;
+    background-color: indigo;
     margin: 0;
     /* font-family: 'Montserrat', sans-serif; */
     font-family: 'Rubik', sans-serif;
@@ -62,14 +62,30 @@ header {
 
 }
 
+.gameBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 100%;
+}
+
 .questionGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0px;
-    
 }
 
+
+#gameDisplay{
+    text-align: center;
+}
+
+#revealDisplay{
+    text-align: center;
+    width: 100vw;
+}
 
 .answerButton {
     border-radius: 8px;
@@ -131,8 +147,9 @@ button:hover {
     display: inline-block;
     font-size: 16px;
 }
+
 .matchmaking {
-    font-size: 40px;
+    /* font-size: 40px; */
 }
 
 #nameDisplay{
@@ -148,4 +165,21 @@ button:hover {
     width: 0;
     border-radius: 20px;
     background-color: lightsteelblue;
+}
+
+
+#finalBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 80%;
+    height: 100px;
+    border-radius: 100px;
+    border-style: solid;
+    border-width: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
