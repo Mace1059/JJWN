@@ -165,14 +165,19 @@ button:hover {
     width: 0;
     border-radius: 20px;
     background-color: lightsteelblue;
+
 }
 
+@keyframes scale {
+    0%   {transform: scale(0);}
+    100% {transform: scale(1);}
+}
 
 #finalBar{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    background-color: deepskyblue;
     width: 80%;
     height: 100px;
     border-radius: 100px;
@@ -182,4 +187,7 @@ button:hover {
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
+    animation: scale 1s forwards;
+    animation-timing-function: ease-out;
+    transform: scale(0);
 }
