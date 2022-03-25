@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play JJWN!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+
+    <script src='game.js'></script>
+</head>
+<body>
+    <style>
+
+    </style>
+
+    <!-- name entry box, TEMPORARY-->
+    <div id="nameEntryDisplay" style="display:block">
+        <input id="nameEntryBox" placeholder="Nickname">
+        <button onclick="chooseName()">Enter</button>
+    </div>
+
+
+    <div>
+        <!-- name/score/timer plate -->
+        <header>     
+            <div id=scoreDisplay>0</div>
+            <div id=matchmakingMessage class="matchmaking">Matchmaking in Progress...</div>
+            <div id=questionCorrectTotalDisplay class="grade">0/0</div> 
+        </header>
+
+        <!-- matchmaking -->
+        <div id=matchmakingDisplay class = 'text-center' style="display:none;">
+            <h5 id=gameCountdownDisplay></h5>
+            <!-- <h5 id=scoreboard>Scoreboard</h5> -->
+        </div>
+
+        <div id="timerBar" style="width:0;"></div>
+        
+        <div class="gameBox">
+            <div id=gameDisplay style="display:none;">
+                <h4 id = "questionDisplay">QUESTION</h4>
+                <div id=questionButtons class='questionGrid' style="">
+                    <button onclick="answerSubmit(1)" class='answerButton a1' id = answer1>ANSWER 1</button>
+                    <button onclick="answerSubmit(2)" class='answerButton a2' id = answer2>ANSWER 2</button>
+                    <button onclick="answerSubmit(3)" class='answerButton a3' id = answer3>ANSWER 3</button>
+                    <button onclick="answerSubmit(4)" class='answerButton a4' id = answer4>ANSWER 4</button>
+                </div>
+            </div>
+
+            <div id=revealDisplay style="display:none">
+                <h2 id = "message"></h2>
+                <button onclick="showQuestion()" class='nextQuestionButton'>Next Question</button>
+            </div>
+        </div>
+
+        <canvas id="finalBar" width="200" height="200" style="display:none"></canvas>
+
+
+    
+    </div>
+
+    <div class="footer">
+        <div id=timerDisplay class="timerDisplay">20</div>
+
+    </div>
+</body>
+
+
+</html>
