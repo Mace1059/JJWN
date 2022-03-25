@@ -341,7 +341,7 @@ function answerSubmit(int){
   if (finalRound) {
     if (correct == true) {
       console.log(finalRoundScore)
-      fillRectangleFunction(finalRoundScore)
+      fillRectangleFunction(1)
     }
     showQuestion()
   }
