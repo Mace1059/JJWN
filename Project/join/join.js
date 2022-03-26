@@ -1,3 +1,5 @@
+var socket = io();
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth - 100;
@@ -65,8 +67,14 @@ function chooseName(){
       document.getElementById('playerNameSubmissionDisplay').style.display = 'none';
       document.getElementById('waitingDraw').style.display = '';
 
+      socket.emit('JOIN1', name);
+
       // setTimeout(toGame, 2000)
     }
+
+
+    
+
 }
 
 
