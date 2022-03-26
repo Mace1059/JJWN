@@ -1,12 +1,39 @@
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server, { cors: { origin: "*"} });
-var min = Math.ceil(1);
-var max = Math.floor(65535);
-var gamePin = Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth - 100;
+canvas.height = 600;
 
-console.log("hi")
+const canvasOffsetX = canvas.offsetLeft;
+const canvasOffsetY = canvas.offsetTop;
+
+
+// ctx.fillRect(0, 10, 100, 100)
+let painting = false;
+
+function startPosition() {
+    painting=true;
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+
+}
+function finishedPosition() {
+    painting=false;
+}
+
+
+function draw(e){
+    if (!painting) return;
+    console.log(e.clientX, e.clientY);
+    ctx.lineWidth = 10;
+    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.stroke();
+}
+canvas.addEventListener('mousedown', startPosition)
+canvas.addEventListener('mouseup', finishedPosition)
+canvas.addEventListener('mousemove', draw)
+
+
+
 class Player {
   constructor(name, score) {
     this.name = name;
@@ -24,26 +51,7 @@ const playerMap = new Map();
 console.log("test")
 
 
-app.use(express.static(__dirname));
- app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/join.html');
-});
 
-var pin = pad(gamePin, 5)
-
-function pad(num, size) {
-  num = num.toString();
-  while (num.length < size) num = "0" + num;
-  return num;
-}
-
-server.listen(pin, () => {
-  console.log('listening on *:' + pin);
-});
-
-io.on('connection', (socket) => {
-  console.log
-});
 
 function chooseName(){
     var name = document.getElementById("nameEntryBox").value;
@@ -61,9 +69,6 @@ function chooseName(){
     }
 }
 
-function toGame(){
-  location.href = "game.html";
-}
 
 
 function chooseID(){

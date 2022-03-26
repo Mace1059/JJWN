@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
 
-    <script src='join.js'></script>
+    <script src="/socket.io/socket.io.js"></script>
 
 </head>
 <style>
@@ -144,40 +144,6 @@
         <p id=nameDisplay style="display:none">Name: </p>
     </div>
 </body>
-<script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth - 100;
-    canvas.height = 600;
-    
-    const canvasOffsetX = canvas.offsetLeft;
-    const canvasOffsetY = canvas.offsetTop;
+<script src='join.js'></script>
 
-
-    // ctx.fillRect(0, 10, 100, 100)
-    let painting = false;
-
-    function startPosition() {
-        painting=true;
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-
-    }
-    function finishedPosition() {
-        painting=false;
-    }
-
-
-    function draw(e){
-        if (!painting) return;
-        console.log(e.clientX, e.clientY);
-        ctx.lineWidth = 10;
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        ctx.stroke();
-    }
-    canvas.addEventListener('mousedown', startPosition)
-    canvas.addEventListener('mouseup', finishedPosition)
-    canvas.addEventListener('mousemove', draw)
-
-</script>
 </html>
