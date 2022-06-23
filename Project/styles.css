@@ -1,5 +1,5 @@
 body {
-    background-color: indigo;
+    background-color: midnightblue;
     margin: 0;
     /* font-family: 'Montserrat', sans-serif; */
     font-family: 'Rubik', sans-serif;
@@ -62,25 +62,26 @@ header {
 
 }
 
-.gameBox {
+#gameBox {
+    align-content: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    margin: auto;
     height: 400px;
     width: 100%;
 }
 
+
+
 .questionGrid {
-    display: grid;
+    display: block;
     grid-template-columns: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0px;
 }
 
-
-#gameDisplay{
-    text-align: center;
-}
 
 #revealDisplay{
     text-align: center;
