@@ -1,3 +1,5 @@
+var socket = io();
+
 var pname = null;
 var correct = true;
 const SPEED_SCORE = 200;
@@ -19,106 +21,102 @@ var finalRoundScoreLeft = 1;
 var finalRoundScoreRight = 1;
 
 var finalRound = false;
+const FINAL_ROUND_BASE_SCORE = 20; 
+
+
+const myURL = new URL(window.location.href);
+
+var id = myURL.searchParams.get('id'); // =  8Dyu81KnunhEnDUUAAAB in this example
+console.log("id=" + id)
+
+
+
+//4
+socket.on('connect', function() {
+  removeMatchupBox = true;
+  // matchupBox('JV is', "black");
+  // matchupBox('small', "blue");
+  // newElement('div', 'vs', 'vs', 'vs');
+  console.log("id2=" + id)
+  socket.emit('player-join-game', id)
+});
+
+
+socket.on('update-timer', function(data) {
+  updateTimer(data);
+});
+
+socket.on('timer-end', function(data) {
+  clearInterval(timer);
+  console.log("TIMER ENDED")
+  document.getElementById('revealDisplay').style.display = "none";  
+  document.getElementById('gameBox').style.display = "none";
+});
+
+socket.on('opponents-ready', function(data) {
+  console.log("you have received opponents")
+  console.log(data)
+  // matchupBox(pname, "black");
+});
+
+socket.on('deathmatch', function(data) {
+  finalRound = true;
+  fillRectangleFunction(0)
+  document.getElementById('finalBar').style.display = "block"; 
+  setTimeout(function() { updateTimer(TIME*2)}, 5000);
+  setTimeout(function() { simulateFinalRound()}, 5000);
+});
+
+socket.on('update-bar', function(data) {
+  fillRectangleFunction(data);
+});
+
+
+  //temporary
+
+  // document.getElementById('mb').remove();  
+  // document.getElementById('mb').remove();  
+  // document.getElementById('vs').remove(); 
+
+  // setTimeout(function() { showQuestion()}, 2000);
+
+
+
+
+
 
 //=====================================================================================
 
-// Player class for name/score, used in playerMap with name as key
-class Player {
-  constructor(name, score) {
-    this.name = name;
-    this.score = score;
-  }
-  get getScore() {
-    return this.score;
-  }
-  setScore(newscore) {
-    this.score = newscore;
-  }
-}
 
-//create 
-const playerMap = new Map();
-var winnerPlayerMap = new Map();
+function newElement(type, mclass, mid, mcontent) {
+  var e = document.createElement('div');
+  document.body.appendChild(e);
+  e.textContent = mcontent;
+  e.setAttribute('class', mclass);
+  e.setAttribute("id", mid);
+  console.log(e)
+  console.log(type, mclass, mid, mcontent)
 
-playerMap.set('name1', new Player('name1', 100));
-// playerMap.set('name2', new Player('name2', 200));
-// playerMap.set('name3', new Player('name3', 300));
-// playerMap.set('name4', new Player('name4', 400));
-// playerMap.set('name5', new Player('name5', 500));
-// playerMap.set('name6', new Player('name6', 600));
-// playerMap.set('name7', new Player('name7', 700));
-// playerMap.set('name8', new Player('name8', 100));
-// playerMap.set('name9', new Player('name9', 200));
-// playerMap.set('name10', new Player('name10', 300));
-// playerMap.set('name11', new Player('name11', 400));
-// playerMap.set('name12', new Player('name12', 500));
-// playerMap.set('name13', new Player('name13', 600));
-// playerMap.set('name14', new Player('name14', 600));
-// playerMap.set('name15', new Player('name15', 600));
-
-
-// Sort players still in contention by their score, returns list of names in order by score
-function sortPlayersByScore(pMap) {
-  var points = [];
-  for (let [key, value] of pMap) {
-      tempscore = pMap.get(key).score
-      points.push({pname: key, score: tempscore});
-  }
-  points.sort(function(a, b){return b.score - a.score});
-  // now points[0] contains the highest value
-  // and points[points.length-1] contains the lowest value
-
-  // Now that the 2 dimensional object array is sorted
-  var sortedNames = [];
-  for (let i = 0; i < points.length; i++) {
-    sortedNames.push(points[i].pname);
-    // console.log(points[i].pname + ':' + points[i].score);
-  }
-  return sortedNames; 
+  return e;
 }
 
 
-// tp = total players, winnerlist = list of players still in contention 
-// generates bracket based on rankings
-// in case of odd number, randomize between 2 and n-1 and add to 1 v n matchup
-function bracketGenerator(mlist){
-  
-  tp = mlist.length;
-  let mbracket = new Array(); // create an empty array of length tp
+function matchupBox(name, color){
+  e = newElement('div', 'matchupBox', 'mb', name)
+  e.addEventListener("animationend", listener, false);
+  e.style.background = color;
+}
 
-  // i and j are moving indices for matchmaking
-  i = 0;
-  j = mlist.length-1;
-  
-  // even number of players in winnerList
-  if (tp % 2 === 0) {
-    while(i < j) {
-      var matchup = [mlist[i], mlist[j]]
-
-      mbracket.push(matchup);
-
-      // mbracket[i] = new Array(mlist[i], mlist[j]); // make each element an array
-      i += 1
-      j -= 1
-    }
+function listener(event) {
+  switch(event.type) {
+    case "animationstart":
+      break;
+    case "animationend":
+      console.log("an animation ended")
+      break;
+    case "animationiteration":
+      break;
   }
-  //odd number of players in winnerList
-  else if (tp % 2 === 1) {
-    max = j-1
-    min = i+1
-    oddPlayer = Math.floor(Math.random() * (max - min + 1) + min)
-    var matchup = [mlist[i], mlist[oddPlayer], mlist[j]]
-    mbracket.push(matchup); // make each element an array
-    mlist.splice(oddPlayer, 1)
-    i += 1
-    j -= 2
-    while(i < j){
-      mbracket[i] = new Array(mlist[i], mlist[j]); // make each element an array
-      i += 1
-      j -= 1
-    }
-  }
-  return mbracket
 }
 
 
@@ -168,10 +166,6 @@ function shuffle(array) {
 }
 
   
-// Returns true if chosen answer is the correct one, false otherwise
-function checkAnswer(int, index) {
-  return (int == index); // correct is boolean, need index of right answer
-}
 
 
 function speedScoreTimer(){
@@ -189,7 +183,6 @@ function speedScoreTimer(){
 
 function updateTimer(int){
   showQuestion();
-
   time = int;
   bar(time)
   timer = setInterval(function(){
@@ -198,14 +191,6 @@ function updateTimer(int){
       if(time <= 0){
         clearInterval(startScoreTimer)
         clearInterval(timer)
-        
-        if (finalRound){
-          finishGame();
-        }
-        else {
-          determineWinner(bracket);
-          console.log(winnerPlayerMap)
-        }
       }
   }, 1000);
 }
@@ -217,7 +202,6 @@ function bar(mtime) {
   function frame() {
     console.log('test')
     if (width >= 100) {
-      console.log('pussy')
       clearInterval(startBar);
     } else {
       width = width + (1/mtime); 
@@ -226,109 +210,50 @@ function bar(mtime) {
   }
 }
 
-// function checkBar(){
-//   if barwidth ? 
-// }
 
-function chooseName(){
-  pname = document.getElementById("nameEntryBox").value;
-  if (pname == ''){
-    return
-  }
-  else {
-    playerMap.set(pname, new Player(pname, 0))
-    document.getElementById('nameEntryDisplay').style.display = "none";
-    // document.getElementById('nameDisplay').innerHTML = "Name: " + pname;
-    matchmaking(playerMap);
-  }
-
-}
-
-// use bracket to select highest score
-function determineWinner(mlist){
-  //create empty winnerPlayerMap and fill after every round
-  winnerPlayerMap = new Map();
-
-  //iterate through bracket
-  for (let i = 0; i < mlist.length; i++) {
-    var p1 = mlist[i][0];
-    var p2 = mlist[i][1];
-    var s1 = playerMap.get(p1).score;
-    var s2 = playerMap.get(p2).score;
-    if (s1 > s2){
-      winnerPlayerMap.set(p1, playerMap.get(p1));
-    }
-    else {
-      winnerPlayerMap.set(p2, playerMap.get(p2));
-    }
-  }
-  console.log(winnerPlayerMap.size)  
-  matchmaking(winnerPlayerMap);
-}
 
 //change width of rectangle in final bar based on 
 function fillRectangleFunction(int){
   var canvas = document.getElementById("finalBar");
   var ctx = canvas.getContext("2d");
   ctx.fillStyle = "#FFD700";
-  if (int===0){
-    middle = canvas.width/2
-    barwidth = middle
-  }
-  else {
-    barwidth += int;
-  }
+  
+  middle = canvas.width/2
+  barwidth = middle + int;
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(0, 0, barwidth, canvas.height);
 }
 
-function simulateFinalRound(){
-  startSimulate = setInterval(function(){
-    int = -2
-    fillRectangleFunction(int)
-  }, 1000);
-}
+// function simulateFinalRound(){
+//   startSimulate = setInterval(function(){
+//     int = -2
+//     fillRectangleFunction(int)
+//   }, 1000);
+// }
 
 function finishGame(){
   document.getElementById('revealDisplay').style.display = "none";  
-  document.getElementById('gameDisplay').style.display = "none";
+  document.getElementById('gameBox').style.display = "none";
 }
 
 
-function matchmaking(pmap){
-  //add score of round to total score, reset round score
-  totalScore += roundScore;
-  roundScore = 0; 
-
-  //create ranked bracket
-  var sortedScores = sortPlayersByScore(pmap);
-  bracket = bracketGenerator(sortedScores);
-  console.log(bracket)
-
-
-
-  let name1 = bracket[0][0];
-  let name2 = bracket[0][1];
-
-  document.getElementById('matchmakingMessage').innerHTML = name1 + " (" + (sortedScores.indexOf(name1)+1) + ") vs " + name2 + " (" + (sortedScores.indexOf(name2)+1) + ")";
-  document.getElementById('revealDisplay').style.display = "none";  
-  document.getElementById('gameDisplay').style.display = "none";
-  document.getElementById('matchmakingDisplay').style.display = "block"; 
-
-  var size = pmap.size;
-  if (size > 3){
-    bar(5)
-    setTimeout(function() { updateTimer(TIME); }, 5000)
-  }
-  else {
-    finalRound = true;
-    fillRectangleFunction(0)
-    document.getElementById('finalBar').style.display = "block"; 
-    setTimeout(function() { updateTimer(TIME*2)}, 5000);
-    setTimeout(function() { simulateFinalRound()}, 5000);
+// if (size > 3){
+  //   bar(5)
+  //   setTimeout(function() { updateTimer(TIME); }, 5000)
+  // }
+  // else {
+  //   finalRound = true;
+  //   fillRectangleFunction(0)
+  //   document.getElementById('finalBar').style.display = "block"; 
+  //   setTimeout(function() { updateTimer(TIME*2)}, 5000);
+  //   setTimeout(function() { simulateFinalRound()}, 5000);
 
 
-  }
+
+// Returns true if chosen answer is the correct one, false otherwise
+function checkAnswer(int, index) {
+  return (int == index); // correct is boolean, need index of right answer
 }
 
 // called by answer buttons
@@ -340,29 +265,25 @@ function answerSubmit(int){
   // test if final round, if so, skip next question screen and show new question
   if (finalRound) {
     if (correct == true) {
-      console.log(finalRoundScore)
-      fillRectangleFunction(1)
+      socket.emit("update-final-score", FINAL_ROUND_BASE_SCORE)
     }
     showQuestion()
   }
   else {
-    //Checks to see if answer index matches correct index
     document.getElementById('revealDisplay').style.display = "block";  
-    document.getElementById('questionButtons').style.display = "none";
-    document.getElementById('message').style.display = 'block';
-    document.getElementById('questionDisplay').style.display = "none";
+    document.getElementById('gameBox').style.display = "none";
 
-    
+    //Checks to see if answer index matches correct index    
     if (correct == true){
       questionsCorrect += 1
       roundScore += questionScore;
-    
+      socket.emit('update-score', roundScore)
+
       document.getElementById('message').innerHTML = "Correct! +" + questionScore;
     } else
       document.getElementById('message').innerHTML = "Incorrect";
     
       questionsAnswered += 1
-      playerMap.get(pname).setScore(roundScore)
       document.getElementById('scoreDisplay').innerHTML = roundScore;
       document.getElementById('questionCorrectTotalDisplay').innerHTML = questionsCorrect + "/" + questionsAnswered;
       // " (" + Math.round(questionsCorrect/questionsAnswered * 100) + "%)";
@@ -371,14 +292,23 @@ function answerSubmit(int){
 
 // function to show first/next question on "Next Question" button press
 function showQuestion() {
+  // remove elements here!!!!
+  // if (removeMatchupBox) {
+  //   document.getElementById('mb').remove();  
+  //   document.getElementById('mb').remove();  
+  //   document.getElementById('vs').remove();
+  //   removeMatchupBox = false;
+  // }
+  
+
   var answerList = [question.a1, question.a2, question.a3, question.a4];
   var shuffledAnswerList = shuffle(answerList)
   
   document.getElementById('revealDisplay').style.display = "none";  
-  document.getElementById('gameDisplay').style.display = "block";
-  document.getElementById('questionButtons').style.display = "block";
-  document.getElementById('message').style.display = "none";
-  document.getElementById('questionDisplay').style.display = "block";
+  document.getElementById('gameBox').style.display = "block";
+
+  // document.getElementById('questionButtons').style.display = "block";
+
 
   document.getElementById('scoreDisplay').innerHTML = roundScore;
 

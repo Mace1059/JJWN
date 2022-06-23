@@ -1,25 +1,30 @@
+var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+document.getElementsByTagName('head')[0].appendChild(script);
+
+
 var socket = io();
 
-// var form = document.getElementById('form');
-// var input = document.getElementById('input');
 
-// form.addEventListener('submit', function(e) {
-//   e.preventDefault();
-//   if (input.value) {
-//     socket.emit('HOST1', input.value);
-//     input.value = '';
-//   }
-// });
+
+
+
 
 function createGame(){
-      socket.emit('HOST1', "start");
+      socket.emit('HOST1', "create");
+      document.getElementById('createGame').style.display = 'none';
+      document.getElementById('startGame').style.display = 'block';
+
 }
 
+//1
+function startGame(){
+    socket.emit('START', "start");
+    document.getElementById('startGameDisplay').style.display = 'none';
+}  
 
 
-socket.on('HOST1', function(msg) {
-    document.getElementById('newName').innerHTML = msg;
-    console.log("Host received " + msg)
-
-
+socket.on('HOST1', function(pname) {
+    document.getElementById('newNameList').innerHTML = pname;
+    console.log("Host received " + pname)
 });

@@ -36,56 +36,31 @@ canvas.addEventListener('mousemove', draw)
 
 
 
-class Player {
-  constructor(name, score) {
-    this.name = name;
-    this.score = score;
-  }
-  get getScore() {
-    return this.score;
-  }
-  setScore(newscore) {
-    this.score = newscore;
-  }
-}
 
-const playerMap = new Map();
 console.log("test")
 
 
 
 
 function chooseName(){
-    var name = document.getElementById("nameEntryBox").value;
-    if (name == ''){
-      return
-    }
-    else {
-      // Figure out how to append instead of replacing element
-      // playerMap.set(pname, new Player(pname, 0))
-      document.getElementById('nameDisplay').innerHTML = "Name: " + name;
-      document.getElementById('playerNameSubmissionDisplay').style.display = 'none';
-      document.getElementById('waitingDraw').style.display = '';
+  var name = document.getElementById("nameEntryBox").value;
+  if (name == ''){
+    return
+  }
+  else {
+    // Figure out how to append instead of replacing element
+    // playerMap.set(pname, new Player(pname, 0))
+    document.getElementById('nameDisplay').innerHTML = "Name: " + name;
+    document.getElementById('playerNameSubmissionDisplay').style.display = 'none';
+    document.getElementById('waitingDraw').style.display = '';
 
-      socket.emit('JOIN1', name);
+    socket.emit('JOIN1', name);
 
-      // setTimeout(toGame, 2000)
-    }
-
-
-    
-
+    // setTimeout(toGame, 2000)
+  }
 }
 
-
-
-function chooseID(){
-    var id = document.getElementById("IDEntryBox").value;
-    if (id == ''){
-      return
-    }
-    else {
-      // Figure out how to append instead of replacing element
-      document.getElementById('IDDisplay').innerHTML = "Game ID: " + id;
-    }
-}
+//3
+socket.on('START', function(msg) {
+  window.location.href = '/game' + "?id=" + socket.id;;
+});
