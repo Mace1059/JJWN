@@ -1,30 +1,50 @@
-var script = document.createElement('script');
-script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
-document.getElementsByTagName('head')[0].appendChild(script);
-
-
 var socket = io();
 
 
-
-
-
-
 function createGame(){
-      socket.emit('HOST1', "create");
-      document.getElementById('createGame').style.display = 'none';
-      document.getElementById('startGame').style.display = 'block';
+    console.log(socket.id)
 
+    var pin = Math.floor(1000 + Math.random() * 9000);
+
+
+    socket.emit('create-game', "create");
+    $('.createGameDisplay').hide();
+
+    pinMessage = $('.gamePin').text();
+    pinMessage = pinMessage + " " + pin;
+    $('.gamePin').text(pinMessage).show();
+    $('.loading').text("Waiting for Players");
+    $('.startGame').show();
 }
 
-//1
+
+$(document).ready(function(){
+    console.log("THIS IS WORKING")
+});
+
+
 function startGame(){
-    socket.emit('START', "start");
-    document.getElementById('startGameDisplay').style.display = 'none';
+    socket.emit('START', '');
+    $('header').hide();
+    $(".createGameDisplay").remove();
+    $(".nameList").remove();
+
 }  
 
 
-socket.on('HOST1', function(pname) {
-    document.getElementById('newNameList').innerHTML = pname;
+socket.on('name-submit', function(pname) {
+    $('.nameList').append('<div class="nameElement">'+ pname +'</div>').show('slow');
+
     console.log("Host received " + pname)
 });
+
+socket.on('leaderboard', function(array) {
+    console.log(array);
+    $("body").append('<ol class="leaderboard">Leaderboard</ol>')
+    for (let i = 0; i < array.length; i++) {
+        $(".leaderboard").append('<li><div>class="leaderboardElement">' + array[i] +'</div></li>')
+    }
+});
+
+
+  

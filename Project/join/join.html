@@ -128,10 +128,10 @@
 <body>
     <div id="playerNameSubmissionDisplay">
         <!-- see how button click is different from pressing enter -->
-        <div>
-            <input id="nameEntryBox" placeholder="Nickname">
-            <button onclick="chooseName()">Submit</button>
-        </div>
+        <form class="nameSubmit" onsubmit="chooseName(); return false;">
+            <input type="text" autocomplete="off" id="nameEntryBox" name="name" placeholder="Nickname">
+            <input type="submit">Submit</button>
+        </form>
     </div>
     
     <div id="waitingDraw" style="display:none">
