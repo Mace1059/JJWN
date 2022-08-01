@@ -1,88 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<title>Page Title</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>Join</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
+
+
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
 <style>
-    .matchupBox {
-        position: absolute;
-        border: 3px solid steelblue;
-        border-radius: 12px;
-        background-color: gray;
-        justify-content: center;
-        text-align: center;
-        border: 5px;
-        color: white;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 10px;
-        padding-bottom: 10px;        
-    }
-
-    .vs {   
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        line-height: 35px;        
-        text-align: center;
+    header {
+        position: sticky;
+        display: grid;
+        grid-template-columns: 0.3fr 1.4fr 0.3fr;
+        /* justify-content: space-between; */
+        justify-items: center;
+        align-items: center;
+        border-bottom: 5px solid;
+        border-bottom-color: lightsteelblue;
+        background-color: white;
+        color: black;
         font-size: 30px;
-        font-style: italic;
-        padding: 0px;
-        border-width: 5px; 
-        border-style: solid;
-        border-color: goldenrod;
-        border-radius: 50%;
-        background-color: gold;
-        color: goldenrod;  
-        animation: vsScale 0.2s forwards;
-        animation-delay: 0.5s;
-        animation-timing-function: ease-out;
-        transform: scale(0);
+        height: 100px;
+        width: 100%;
+        padding: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
-    #mb1 {
-        left: 0;
-        width: 20vw;
-        animation: mymove1 0.3s forwards;
-        animation-timing-function: ease-out;
-    }
-    #mb2 {
-        right: 0;
-        width: 20vw;
-        animation: mymove2 0.3s forwards;
-        animation-delay: 1s;
-        animation-timing-function: ease-out;
+    .loading{
+        font-size: 30px;
+        grid-column: 2;
     }
 
-    @keyframes mymove1 {
-        from {left: 0px;}
-        to {left: 20vw;}
-    }
+    .loading:after {
+        content: '.';
+        animation: dots 3s steps(5, end) infinite;}
 
-    @keyframes mymove2 {
-        from {right: 0px;}
-        to {right: 20vw;}
-    }
-    
-    @keyframes vsScale {
-        0%   {transform: scale(.1);}
-        100% {transform: scale(1);}
-    }
-    
-    .centertest {
-        display:flex;
+    @keyframes dots {
+        0% {
+           content: '.';}
+        40% {
+            content: '..';}
+        60% {
+            content: '...';}
+        90%, 100% {
+            content: '';}}
+
+    .createGameDisplay {
+        display:block;
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: grid ;
+        background-color: white;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 300px;
+        margin: auto;
+        text-align: center;
         justify-content: center;
+        box-sizing: border-box;
+        border-radius: 12px;
+        color: black;
     }
+ 
+    button{
+        color: white;
+        text-align: center;
+        font-size: 15px;
+        background-color: green;
+        border-radius: 12px;
+        padding: 20px;
+        width: 250px;
+
+    }
+
+    .gamePin{
+        font-size: 20px;
+        padding: 10px;
+        /* animation-delay: 0.2s; */
+        --animate-duration: 1s;
+    }
+
+    .nameList {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        /* grid-template-columns: repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr)); */
+        grid-row-gap: 20px;
+        text-align: center;
+        align-items: center;
+        /* justify-items: center; */
+        padding:10px;
+    }
+
+    .nameElement {
+        display: inline-block;
+        background: blue;
+        /* background-color: black; */
+        text-align: center;
+        justify-content: center;
+        font-size: 20px;
+        /* height: 1em;     */
+        width: fit-content;
+        border-width: 0px;
+        border-radius: 100px;
+        padding: 10px;
+        cursor:pointer;
+        
+    }
+
+    .nameElement:hover{
+        text-decoration: line-through
+    }
+
+    .leaderboard {
+        background-color: green;
+    }
+    
+    .leaderboardElement {
+        margin: 5px;
+        background: white;
+        color: black;
+        text-align: center;
+        justify-content: center;
+        font-size: 30px;
+        /* height: 1em;     */
+        width: fit-content;
+        border-width: 0px;
+        border-radius: 100px;
+        padding: 10px;
+        cursor:pointer;
+    }
+
+ 
+
 
 </style>
+
 <body>
-    <div class="centertest">
-        <div class="vs">vs</div>
-    </div>
+    <ol class="leaderboard"></ol>
+        <li class="leaderboardElement">test</li>
+        <li class="leaderboardElement">test</li>
+
+    <script src="/host/host.js"></script>
+
 </body>
-<script src='gameElementTest.js'></script>
-
-</html>
-
-//hi

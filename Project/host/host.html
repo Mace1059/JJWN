@@ -4,30 +4,46 @@
     <meta charset="UTF-8">
     <title>Join</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
     <link rel="stylesheet" href="../styles.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
+
 
     <script src="/socket.io/socket.io.js"></script>
 
 </head>
 <style>
-    .yuh {
+    header {
         position: sticky;
-        display: flex;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 0.3fr 1.4fr 0.3fr;
+        /* justify-content: space-between; */
+        justify-items: center;
         align-items: center;
-        padding: 20px;
         border-bottom: 5px solid;
         border-bottom-color: lightsteelblue;
         background-color: white;
         color: black;
         font-size: 30px;
+        height: 100px;
         width: 100%;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 30px;
-        padding-bottom: 30px;
+        padding: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .loading{
+        font-size: 30px;
+        grid-column: 2;
     }
 
     .loading:after {
@@ -44,7 +60,7 @@
         90%, 100% {
             content: '';}}
 
-    .startGameDisplay {
+    .createGameDisplay {
         display:block;
         position:absolute;
         top: 50%;
@@ -65,12 +81,11 @@
         color: black;
     }
  
-    .startGameDisplay button{
+    button{
         color: white;
         text-align: center;
         font-size: 15px;
         background-color: green;
-        border-width: 0px;
         border-radius: 12px;
         padding: 20px;
         width: 250px;
@@ -78,26 +93,102 @@
     }
 
     .gamePin{
-        font-size: 40px;
-        padding: 10px
+        font-size: 20px;
+        padding: 10px;
+        /* animation-delay: 0.2s; */
+        --animate-duration: 1s;
     }
+
+    .nameList {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        /* grid-template-columns: repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr)); */
+        grid-row-gap: 20px;
+        text-align: center;
+        align-items: center;
+        /* justify-items: center; */
+        padding:10px;
+    }
+
+    .nameElement {
+        display: inline-block;
+        background: blue;
+        /* background-color: black; */
+        text-align: center;
+        justify-content: center;
+        font-size: 20px;
+        /* height: 1em;     */
+        width: fit-content;
+        border-width: 0px;
+        border-radius: 100px;
+        padding: 10px;
+        cursor:pointer;
+        
+    }
+
+    .nameElement:hover{
+        text-decoration: line-through
+    }
+
+    .leaderboard {
+        list-style-type: none;
+        background: slategrey;
+        border-width: 0px;
+        border-radius: 12px;
+        padding: 10px;
+        margin: 20px;
+        align-content: center;
+        justify-content: center;
+        width: 60vw;
+    }
+    
+    .leaderboardElement {
+        margin: 5px;
+        background: white;
+        color: black;
+        text-align: center;
+        justify-content: center;
+        font-size: 30px;
+        /* height: 1em;     */
+        width: fit-content;
+        border-width: 0px;
+        border-radius: 100px;
+        padding: 10px;
+        cursor:pointer;
+    }
+
+
+
+    ol > :first-child {
+        background-color:gold;
+    }
+
+    ol > :nth-child(2) {
+        background-color:silver;
+    }
+
+    ol > :nth-child(3){
+        background-color: burlywood;
+    }
+ 
+
+
 </style>
-<header class="yuh">
-    <div class="loading">Waiting for Players</div>
+<header>
+    <div class="gamePin animate__animated animate__tada" style="display:none">Game Pin: </div>
+    <div class="loading">Waiting for Host to Start</div>
+    <button class="startGame" style="display:none" onclick="startGame()">Start Game</button>
 </header>
 
 
 <body>
-    <div id="startGameDisplay" class="startGameDisplay">
-        <div class="gamePin">Game Pin: </div>
-        <div class="gamePin">100000</div>
-
-        <button id="createGame" onclick="createGame()">Create Game</button>
-        <button id="startGame" style="display:none" onclick="startGame()">Start Game</button>
+    <div class="createGameDisplay">
+        <button class="createGame" onclick="createGame()">Create Game</button>
     </div>
     
-    <div id="newNameList"></div>
+    <div class="nameList"></div>
     
+
     <script src="/host/host.js"></script>
 
 </body>

@@ -43,6 +43,8 @@ console.log("test")
 
 
 function chooseName(){
+
+  console.log("you have chosen a name")
   var name = document.getElementById("nameEntryBox").value;
   if (name == ''){
     return
@@ -53,14 +55,13 @@ function chooseName(){
     document.getElementById('nameDisplay').innerHTML = "Name: " + name;
     document.getElementById('playerNameSubmissionDisplay').style.display = 'none';
     document.getElementById('waitingDraw').style.display = '';
-
-    socket.emit('JOIN1', name);
-
-    // setTimeout(toGame, 2000)
+    socket.emit('join', name);
   }
 }
 
 //3
-socket.on('START', function(msg) {
+socket.on('host-started-game', function(msg) {
   window.location.href = '/game' + "?id=" + socket.id;;
 });
+
+

@@ -3,16 +3,24 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*"} });
+
+var allClients = [];
+var allRooms = [];
+
+var hostid;
+
+
 var min = Math.ceil(10000);
 var max = Math.floor(65535);
 var gamePin = Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
-var hostid;
-const ROUND_TIME = 5;
+const ROUND_TIME = 20;
 var totalPlayers = 1;
 var readyPlayers = 0;
 
 winnerPlayerMap = new Map();
 var finalRoundScores = new Map();
+
+
 
 
 
@@ -97,22 +105,21 @@ playerMap.set('name2', new Player('name2', 300, 200, null, null));
 
 
 io.on('connection', (socket) => {
-    socket.on('HOST1', msg => {
+    socket.on('create-game', msg => {
         //Save the socket ID as the host
         hostid = socket.id;
         console.log('host started game.  Host id: ' + socket.id);
     });
 
-    socket.on('JOIN1', pname => {
+    socket.on('join', pname => {
       playerMap.set(socket.id, new Player(pname, 0, 0, null, null));
-      //io.to("HOST").emit("HOST1", msg);
-      //io.emit('HOST1', msg);
+      io.to(hostid).emit("name-submit", pname)
       console.log('New player joined.  Player id: ' + socket.id);    
     });
     
     //2
     socket.on('START', msg => {
-      io.emit("START", msg);
+      socket.broadcast.emit("host-started-game", msg);
     });
 
     socket.on('gameLoaded', msg => {
@@ -162,23 +169,39 @@ function updateTimer(int){
 }
 
 
-
+function idToName(mlist){
+  let nameList = [];
+  for (let i = 0; i < mlist.length; i++) {
+    if (playerMap.has(mlist[i])){
+      nameList.push(playerMap.get(mlist[i]).name)
+    }else{
+      nameList.push(mlist[i])
+    }
+  }
+  console.log("nameList")
+  console.log(nameList)
+  return nameList
+}
 
 function matchmaking(pmap){
   
   //add score of round to total score, reset round score
   //test to enter deathmatch
 
-  console.log("length: " + (pmap).size)
   var sortedScores = sortPlayersByScore(pmap);
   bracket = bracketGenerator(sortedScores);
-  
-  if (pmap.size > 2){  
+
+  if (pmap.size > 2){ 
+    
+    let nameList = idToName(sortedScores)
+    io.to(hostid).emit('leaderboard', nameList)
+
+    io.emit('opponents-ready', "yay");      
+    
     for (let [key, value] of playerMap) {
       playerMap.get(key).setRoundScore(0);
-      io.to(key).emit('opponents-ready', playerMap.get(key));      
     }
-    setTimeout(function(){updateTimer(ROUND_TIME)}, 1000);
+    setTimeout(function(){updateTimer(ROUND_TIME)}, 5000);
   }
   else{
     for (let [key, value] of playerMap) {
@@ -300,8 +323,11 @@ function finalRound(){
 
 function sumFinalScores(id, score){
   let barScore = 0; 
-  if (playerMap.get(id).teamLeader !== null){
-    finalRoundScores.get(playerMap.get(id).teamLeader) + score;
+  let teamLeader = playerMap.get(id).teamLeader; 
+  if (teamLeader !== null){
+    let tempscore = finalRoundScores.get(teamLeader);
+    tempscore = tempscore + score;
+    finalRoundScores.set(teamLeader, tempscore)
   }
   else{
     let tempscore = finalRoundScores.get(id)
@@ -309,6 +335,8 @@ function sumFinalScores(id, score){
     finalRoundScores.set(id, tempscore)
   }
   barScore = finalRoundScores.get(bracket[0][0]) - finalRoundScores.get(bracket[0][1]); 
+  // if (barScore <= -500){
+  // }
   console.log("barscore:" + barScore); 
   io.emit("update-bar", barScore);
   

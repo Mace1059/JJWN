@@ -1,11 +1,18 @@
-function createElement(type, mclass, mid, mcontent) {
-    const e = document.createElement('div');
-    document.body.appendChild(e);
-    e.textContent = mcontent;
-    e.setAttribute('class', mclass);
-    e.setAttribute("id", mid);
-    console.log(type, mclass, mid, mcontent)
+var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+document.getElementsByTagName('head')[0].appendChild(script);
+
+function test(){
+    console.log("you have received opponents")
+    console.log(data)
+    matchupBox("mbox1", "blue")
+    matchupBox("mbox2", "black")
+    $(".mbox1").animate({
+    right: '100%'
+    });
+    $(".mbox2").animate({
+    left: '50%'
+    });
 }
-createElement('div', 'matchupBox', 'mb1', 'Fuck you pussy1')
-createElement('div', 'matchupBox', 'mb2', 'Fuck you pussy2')
+    // matchupBox(pname, "black");
 
